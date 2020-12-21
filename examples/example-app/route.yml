@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    openshift.io/host.generated: "true"
+  labels:
+    app: httpd-example
+    template: httpd-example
+  name: httpd-example
+spec:
+  host: ""
+  to:
+    kind: Service
+    name: httpd-example
+    weight: 100
+  wildcardPolicy: None

@@ -1,0 +1,1454 @@
+{
+  "description": "ArgoCD is the Schema for the argocds API",
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "argoproj.io/v1alpha1"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "ArgoCD"
+      ]
+    },
+    "metadata": {
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta"
+    },
+    "spec": {
+      "description": "ArgoCDSpec defines the desired state of ArgoCD",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "applicationInstanceLabelKey": {
+          "description": "ApplicationInstanceLabelKey is the key name where Argo CD injects the app name as a tracking label.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "configManagementPlugins": {
+          "description": "ConfigManagementPlugins is used to specify additional config management plugins.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "controller": {
+          "description": "Controller defines the Application Controller options for ArgoCD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "appSync": {
+              "description": "AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default. \n Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "processors": {
+              "description": "Processors contains the options for the Application Controller processors.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "operation": {
+                  "description": "Operation is the number of application operation processors.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "format": "int32"
+                },
+                "status": {
+                  "description": "Status is the number of application status processors.",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "format": "int32"
+                }
+              }
+            },
+            "resources": {
+              "description": "Resources defines the Compute Resources required by the container for the Application Controller.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "limits": {
+                  "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                },
+                "requests": {
+                  "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "dex": {
+          "description": "Dex defines the Dex server options for ArgoCD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "config": {
+              "description": "Config is the dex connector configuration.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "image": {
+              "description": "Image is the Dex container image.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "openShiftOAuth": {
+              "description": "OpenShiftOAuth enables OpenShift OAuth authentication for the Dex server.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "resources": {
+              "description": "Resources defines the Compute Resources required by the container for Dex.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "limits": {
+                  "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                },
+                "requests": {
+                  "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                }
+              }
+            },
+            "version": {
+              "description": "Version is the Dex container image tag.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "gaAnonymizeUsers": {
+          "description": "GAAnonymizeUsers toggles user IDs being hashed before sending to google analytics.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "gaTrackingID": {
+          "description": "GATrackingID is the google analytics tracking ID to use.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "grafana": {
+          "description": "Grafana defines the Grafana server options for ArgoCD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "description": "Enabled will toggle Grafana support globally for ArgoCD.",
+              "type": "boolean"
+            },
+            "host": {
+              "description": "Host is the hostname to use for Ingress/Route resources.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "image": {
+              "description": "Image is the Grafana container image.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ingress": {
+              "description": "Ingress defines the desired state for an Ingress for the Grafana component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "enabled"
+              ],
+              "properties": {
+                "annotations": {
+                  "description": "Annotations is the map of annotations to apply to the Ingress.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "enabled": {
+                  "description": "Enabled will toggle the creation of the Ingress.",
+                  "type": "boolean"
+                },
+                "path": {
+                  "description": "Path used for the Ingress resource.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "tls": {
+                  "description": "TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "description": "IngressTLS describes the transport layer security associated with an Ingress.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "hosts": {
+                        "description": "Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.",
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "secretName": {
+                        "description": "SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the \"Host\" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "resources": {
+              "description": "Resources defines the Compute Resources required by the container for Grafana.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "limits": {
+                  "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                },
+                "requests": {
+                  "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                }
+              }
+            },
+            "route": {
+              "description": "Route defines the desired state for an OpenShift Route for the Grafana component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "enabled"
+              ],
+              "properties": {
+                "annotations": {
+                  "description": "Annotations is the map of annotations to use for the Route resource.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "enabled": {
+                  "description": "Enabled will toggle the creation of the OpenShift Route.",
+                  "type": "boolean"
+                },
+                "path": {
+                  "description": "Path the router watches for, to route traffic for to the service.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "tls": {
+                  "description": "TLS provides the ability to configure certificates and termination for the Route.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "termination"
+                  ],
+                  "properties": {
+                    "caCertificate": {
+                      "description": "caCertificate provides the cert authority certificate contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "certificate": {
+                      "description": "certificate provides certificate contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "destinationCACertificate": {
+                      "description": "destinationCACertificate provides the contents of the ca certificate of the final destination.  When using reencrypt termination this file should be provided in order to have routers use it for health checks on the secure connection. If this field is not specified, the router may provide its own destination CA and perform hostname validation using the short service name (service.namespace.svc), which allows infrastructure generated certificates to automatically verify.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "insecureEdgeTerminationPolicy": {
+                      "description": "insecureEdgeTerminationPolicy indicates the desired behavior for insecure connections to a route. While each router may make its own decisions on which ports to expose, this is normally port 80. \n * Allow - traffic is sent to the server on the insecure port (default) * Disable - no traffic is allowed on the insecure port. * Redirect - clients are redirected to the secure port.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "key": {
+                      "description": "key provides key file contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "termination": {
+                      "description": "termination indicates termination type.",
+                      "type": "string"
+                    }
+                  }
+                },
+                "wildcardPolicy": {
+                  "description": "WildcardPolicy if any for the route. Currently only 'Subdomain' or 'None' is allowed.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "size": {
+              "description": "Size is the replica count for the Grafana Deployment.",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int32"
+            },
+            "version": {
+              "description": "Version is the Grafana container image tag.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "ha": {
+          "description": "HA options for High Availability support for the Redis component.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "description": "Enabled will toggle HA support globally for Argo CD.",
+              "type": "boolean"
+            },
+            "redisProxyImage": {
+              "description": "RedisProxyImage is the Redis HAProxy container image.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "redisProxyVersion": {
+              "description": "RedisProxyVersion is the Redis HAProxy container image tag.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "helpChatText": {
+          "description": "HelpChatText is the text for getting chat help, defaults to \"Chat now!\"",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "helpChatURL": {
+          "description": "HelpChatURL is the URL for getting chat help, this will typically be your Slack channel for support.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "image": {
+          "description": "Image is the ArgoCD container image for all ArgoCD components.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "import": {
+          "description": "Import is the import/restore options for ArgoCD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "description": "Name of an ArgoCDExport from which to import data.",
+              "type": "string"
+            },
+            "namespace": {
+              "description": "Namespace for the ArgoCDExport, defaults to the same namespace as the ArgoCD.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "initialRepositories": {
+          "description": "InitialRepositories to configure Argo CD with upon creation of the cluster.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "initialSSHKnownHosts": {
+          "description": "InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "excludedefaulthosts": {
+              "description": "ExcludeDefaultHosts describes whether you would like to include the default list of SSH Known Hosts provided by ArgoCD.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "keys": {
+              "description": "Keys describes a custom set of SSH Known Hosts that you would like to have included in your ArgoCD server.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "kustomizeBuildOptions": {
+          "description": "KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "oidcConfig": {
+          "description": "OIDCConfig is the OIDC configuration as an alternative to dex.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prometheus": {
+          "description": "Prometheus defines the Prometheus server options for ArgoCD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "description": "Enabled will toggle Prometheus support globally for ArgoCD.",
+              "type": "boolean"
+            },
+            "host": {
+              "description": "Host is the hostname to use for Ingress/Route resources.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ingress": {
+              "description": "Ingress defines the desired state for an Ingress for the Prometheus component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "enabled"
+              ],
+              "properties": {
+                "annotations": {
+                  "description": "Annotations is the map of annotations to apply to the Ingress.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "enabled": {
+                  "description": "Enabled will toggle the creation of the Ingress.",
+                  "type": "boolean"
+                },
+                "path": {
+                  "description": "Path used for the Ingress resource.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "tls": {
+                  "description": "TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "description": "IngressTLS describes the transport layer security associated with an Ingress.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "hosts": {
+                        "description": "Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.",
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "secretName": {
+                        "description": "SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the \"Host\" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "route": {
+              "description": "Route defines the desired state for an OpenShift Route for the Prometheus component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "enabled"
+              ],
+              "properties": {
+                "annotations": {
+                  "description": "Annotations is the map of annotations to use for the Route resource.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "enabled": {
+                  "description": "Enabled will toggle the creation of the OpenShift Route.",
+                  "type": "boolean"
+                },
+                "path": {
+                  "description": "Path the router watches for, to route traffic for to the service.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "tls": {
+                  "description": "TLS provides the ability to configure certificates and termination for the Route.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "termination"
+                  ],
+                  "properties": {
+                    "caCertificate": {
+                      "description": "caCertificate provides the cert authority certificate contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "certificate": {
+                      "description": "certificate provides certificate contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "destinationCACertificate": {
+                      "description": "destinationCACertificate provides the contents of the ca certificate of the final destination.  When using reencrypt termination this file should be provided in order to have routers use it for health checks on the secure connection. If this field is not specified, the router may provide its own destination CA and perform hostname validation using the short service name (service.namespace.svc), which allows infrastructure generated certificates to automatically verify.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "insecureEdgeTerminationPolicy": {
+                      "description": "insecureEdgeTerminationPolicy indicates the desired behavior for insecure connections to a route. While each router may make its own decisions on which ports to expose, this is normally port 80. \n * Allow - traffic is sent to the server on the insecure port (default) * Disable - no traffic is allowed on the insecure port. * Redirect - clients are redirected to the secure port.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "key": {
+                      "description": "key provides key file contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "termination": {
+                      "description": "termination indicates termination type.",
+                      "type": "string"
+                    }
+                  }
+                },
+                "wildcardPolicy": {
+                  "description": "WildcardPolicy if any for the route. Currently only 'Subdomain' or 'None' is allowed.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "size": {
+              "description": "Size is the replica count for the Prometheus StatefulSet.",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int32"
+            }
+          }
+        },
+        "rbac": {
+          "description": "RBAC defines the RBAC configuration for Argo CD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "defaultPolicy": {
+              "description": "DefaultPolicy is the name of the default role which Argo CD will falls back to, when authorizing API requests (optional). If omitted or empty, users may be still be able to login, but will see no apps, projects, etc...",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "policy": {
+              "description": "Policy is CSV containing user-defined RBAC policies and role definitions. Policy rules are in the form:   p, subject, resource, action, object, effect Role definitions and bindings are in the form:   g, subject, inherited-subject See https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md for additional information.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "scopes": {
+              "description": "Scopes controls which OIDC scopes to examine during rbac enforcement (in addition to `sub` scope). If omitted, defaults to: '[groups]'.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "redis": {
+          "description": "Redis defines the Redis server options for ArgoCD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "image": {
+              "description": "Image is the Redis container image.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "resources": {
+              "description": "Resources defines the Compute Resources required by the container for Redis.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "limits": {
+                  "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                },
+                "requests": {
+                  "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                }
+              }
+            },
+            "version": {
+              "description": "Version is the Redis container image tag.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "repo": {
+          "description": "Repo defines the repo server options for Argo CD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "mountsatoken": {
+              "description": "MountSAToken describes whether you would like to have the Repo server mount the service account token",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "resources": {
+              "description": "Resources defines the Compute Resources required by the container for Redis.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "limits": {
+                  "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                },
+                "requests": {
+                  "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                }
+              }
+            },
+            "serviceaccount": {
+              "description": "ServiceAccount defines the ServiceAccount user that you would like the Repo server to use",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "repositoryCredentials": {
+          "description": "RepositoryCredentials are the Git pull credentials to configure Argo CD with upon creation of the cluster.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resourceCustomizations": {
+          "description": "ResourceCustomizations customizes resource behavior. Keys are in the form: group/Kind.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resourceExclusions": {
+          "description": "ResourceExclusions is used to completely ignore entire classes of resource group/kinds.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resourceInclusions": {
+          "description": "ResourceInclusions is used to only include specific group/kinds in the reconciliation process.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "server": {
+          "description": "Server defines the options for the ArgoCD Server component.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "autoscale": {
+              "description": "Autoscale defines the autoscale options for the Argo CD Server component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "enabled"
+              ],
+              "properties": {
+                "enabled": {
+                  "description": "Enabled will toggle autoscaling support for the Argo CD Server component.",
+                  "type": "boolean"
+                },
+                "hpa": {
+                  "description": "HPA defines the HorizontalPodAutoscaler options for the Argo CD Server component.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "maxReplicas",
+                    "scaleTargetRef"
+                  ],
+                  "properties": {
+                    "maxReplicas": {
+                      "description": "upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "minReplicas": {
+                      "description": "minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down.  It defaults to 1 pod.  minReplicas is allowed to be 0 if the alpha feature gate HPAScaleToZero is enabled and at least one Object or External metric is configured.  Scaling is active as long as at least one metric value is available.",
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "format": "int32"
+                    },
+                    "scaleTargetRef": {
+                      "description": "reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource.",
+                      "type": "object",
+                      "required": [
+                        "kind",
+                        "name"
+                      ],
+                      "properties": {
+                        "apiVersion": {
+                          "description": "API version of the referent",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "kind": {
+                          "description": "Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds\"",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "targetCPUUtilizationPercentage": {
+                      "description": "target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used.",
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            },
+            "grpc": {
+              "description": "GRPC defines the state for the Argo CD Server GRPC options.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "host": {
+                  "description": "Host is the hostname to use for Ingress/Route resources.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "ingress": {
+                  "description": "Ingress defines the desired state for the Argo CD Server GRPC Ingress.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "enabled"
+                  ],
+                  "properties": {
+                    "annotations": {
+                      "description": "Annotations is the map of annotations to apply to the Ingress.",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "enabled": {
+                      "description": "Enabled will toggle the creation of the Ingress.",
+                      "type": "boolean"
+                    },
+                    "path": {
+                      "description": "Path used for the Ingress resource.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "tls": {
+                      "description": "TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "description": "IngressTLS describes the transport layer security associated with an Ingress.",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "properties": {
+                          "hosts": {
+                            "description": "Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.",
+                            "type": [
+                              "array",
+                              "null"
+                            ],
+                            "items": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "secretName": {
+                            "description": "SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the \"Host\" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "host": {
+              "description": "Host is the hostname to use for Ingress/Route resources.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ingress": {
+              "description": "Ingress defines the desired state for an Ingress for the Argo CD Server component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "enabled"
+              ],
+              "properties": {
+                "annotations": {
+                  "description": "Annotations is the map of annotations to apply to the Ingress.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "enabled": {
+                  "description": "Enabled will toggle the creation of the Ingress.",
+                  "type": "boolean"
+                },
+                "path": {
+                  "description": "Path used for the Ingress resource.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "tls": {
+                  "description": "TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "description": "IngressTLS describes the transport layer security associated with an Ingress.",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "hosts": {
+                        "description": "Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.",
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "secretName": {
+                        "description": "SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the \"Host\" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "insecure": {
+              "description": "Insecure toggles the insecure flag.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "resources": {
+              "description": "Resources defines the Compute Resources required by the container for the Argo CD server component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "limits": {
+                  "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                },
+                "requests": {
+                  "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
+                  }
+                }
+              }
+            },
+            "route": {
+              "description": "Route defines the desired state for an OpenShift Route for the Argo CD Server component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "enabled"
+              ],
+              "properties": {
+                "annotations": {
+                  "description": "Annotations is the map of annotations to use for the Route resource.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "enabled": {
+                  "description": "Enabled will toggle the creation of the OpenShift Route.",
+                  "type": "boolean"
+                },
+                "path": {
+                  "description": "Path the router watches for, to route traffic for to the service.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "tls": {
+                  "description": "TLS provides the ability to configure certificates and termination for the Route.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "termination"
+                  ],
+                  "properties": {
+                    "caCertificate": {
+                      "description": "caCertificate provides the cert authority certificate contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "certificate": {
+                      "description": "certificate provides certificate contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "destinationCACertificate": {
+                      "description": "destinationCACertificate provides the contents of the ca certificate of the final destination.  When using reencrypt termination this file should be provided in order to have routers use it for health checks on the secure connection. If this field is not specified, the router may provide its own destination CA and perform hostname validation using the short service name (service.namespace.svc), which allows infrastructure generated certificates to automatically verify.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "insecureEdgeTerminationPolicy": {
+                      "description": "insecureEdgeTerminationPolicy indicates the desired behavior for insecure connections to a route. While each router may make its own decisions on which ports to expose, this is normally port 80. \n * Allow - traffic is sent to the server on the insecure port (default) * Disable - no traffic is allowed on the insecure port. * Redirect - clients are redirected to the secure port.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "key": {
+                      "description": "key provides key file contents",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "termination": {
+                      "description": "termination indicates termination type.",
+                      "type": "string"
+                    }
+                  }
+                },
+                "wildcardPolicy": {
+                  "description": "WildcardPolicy if any for the route. Currently only 'Subdomain' or 'None' is allowed.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "service": {
+              "description": "Service defines the options for the Service backing the ArgoCD Server component.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "description": "Type is the ServiceType to use for the Service resource.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "statusBadgeEnabled": {
+          "description": "StatusBadgeEnabled toggles application status badge feature.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tls": {
+          "description": "TLS defines the TLS options for ArgoCD.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "ca": {
+              "description": "CA defines the CA options.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "configMapName": {
+                  "description": "ConfigMapName is the name of the ConfigMap containing the CA Certificate.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "secretName": {
+                  "description": "SecretName is the name of the Secret containing the CA Certificate and Key.",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "initialCerts": {
+              "description": "InitialCerts defines custom TLS certificates upon creation of the cluster for connecting Git repositories via HTTPS.",
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "usersAnonymousEnabled": {
+          "description": "UsersAnonymousEnabled toggles anonymous user access. The anonymous users get default role permissions specified argocd-rbac-cm.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "version": {
+          "description": "Version is the tag to use with the ArgoCD container image for all ArgoCD components.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "status": {
+      "description": "ArgoCDStatus defines the observed state of ArgoCD",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "applicationController": {
+          "description": "ApplicationController is a simple, high-level summary of where the Argo CD application controller component is in its lifecycle. There are five possible ApplicationController values: Pending: The Argo CD application controller component has been accepted by the Kubernetes system, but one or more of the required resources have not been created. Running: All of the required Pods for the Argo CD application controller component are in a Ready state. Failed: At least one of the  Argo CD application controller component Pods had a failure. Unknown: For some reason the state of the Argo CD application controller component could not be obtained.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dex": {
+          "description": "Dex is a simple, high-level summary of where the Argo CD Dex component is in its lifecycle. There are five possible dex values: Pending: The Argo CD Dex component has been accepted by the Kubernetes system, but one or more of the required resources have not been created. Running: All of the required Pods for the Argo CD Dex component are in a Ready state. Failed: At least one of the  Argo CD Dex component Pods had a failure. Unknown: For some reason the state of the Argo CD Dex component could not be obtained.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phase": {
+          "description": "Phase is a simple, high-level summary of where the ArgoCD is in its lifecycle. There are five possible phase values: Pending: The ArgoCD has been accepted by the Kubernetes system, but one or more of the required resources have not been created. Available: All of the resources for the ArgoCD are ready. Failed: At least one resource has experienced a failure. Unknown: For some reason the state of the ArgoCD phase could not be obtained.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "redis": {
+          "description": "Redis is a simple, high-level summary of where the Argo CD Redis component is in its lifecycle. There are five possible redis values: Pending: The Argo CD Redis component has been accepted by the Kubernetes system, but one or more of the required resources have not been created. Running: All of the required Pods for the Argo CD Redis component are in a Ready state. Failed: At least one of the  Argo CD Redis component Pods had a failure. Unknown: For some reason the state of the Argo CD Redis component could not be obtained.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "repo": {
+          "description": "Repo is a simple, high-level summary of where the Argo CD Repo component is in its lifecycle. There are five possible repo values: Pending: The Argo CD Repo component has been accepted by the Kubernetes system, but one or more of the required resources have not been created. Running: All of the required Pods for the Argo CD Repo component are in a Ready state. Failed: At least one of the  Argo CD Repo component Pods had a failure. Unknown: For some reason the state of the Argo CD Repo component could not be obtained.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "server": {
+          "description": "Server is a simple, high-level summary of where the Argo CD server component is in its lifecycle. There are five possible server values: Pending: The Argo CD server component has been accepted by the Kubernetes system, but one or more of the required resources have not been created. Running: All of the required Pods for the Argo CD server component are in a Ready state. Failed: At least one of the  Argo CD server component Pods had a failure. Unknown: For some reason the state of the Argo CD server component could not be obtained.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "argoproj.io",
+      "kind": "ArgoCD",
+      "version": "v1alpha1"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

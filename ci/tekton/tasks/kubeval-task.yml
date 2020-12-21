@@ -1,0 +1,49 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: kubeval
+spec:
+  workspaces:
+    - name: source
+  params:
+    - name: schema_location
+      type: string
+      description: Location where the schema is located
+      default: /workspace/workspace/Dockerfile
+    - name: kubeval_version
+      type: string
+      description: Kubeval Version
+      default: "0.15.0"
+    - name: binaries_dir
+      type: string
+      description: Directory to store downloaded binaries
+      default: "/tmp/binaries"
+    - name: manifests_dir
+      type: string
+      description: Directory containing all manifests
+      default: "examples"
+    - name: schema_dir
+      type: string
+      description: Directory containing all schemas
+      default: "schema/openshift-json-schema"
+  steps:
+    - name: validate-kubeval
+      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+      workingDir: /workspace/source
+      args:
+      - |-
+        export PATH=${PATH}:$(params.binaries_dir)
+
+        echo -e "\nDownloading kubeval"
+
+        mkdir $(params.binaries_dir)
+
+        curl -SsL https://github.com/instrumenta/kubeval/releases/download/$(params.kubeval_version)/kubeval-linux-amd64.tar.gz | tar xz -C $(params.binaries_dir)
+        
+        echo -e "\nValidating Manifests"
+
+        $(workspaces.source.path)/scripts/validate_resources.sh -d=$(workspaces.source.path)/examples -sl=$(workspaces.source.path)/schemas/openshift-json-schema -e
+        
+      command:
+      - /bin/bash
+      - -c

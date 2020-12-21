@@ -1,0 +1,3494 @@
+{
+  "description": "Application is a definition of Application resource.",
+  "type": "object",
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "argoproj.io/v1alpha1"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "Application"
+      ]
+    },
+    "metadata": {
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta"
+    },
+    "operation": {
+      "description": "Operation contains requested operation parameters.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "info": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "initiatedBy": {
+          "description": "OperationInitiator holds information about the operation initiator",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "automated": {
+              "description": "Automated is set to true if operation was initiated automatically by the application controller.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "username": {
+              "description": "Name of a user who started operation.",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "retry": {
+          "description": "Retry controls failed sync retry behavior",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "backoff": {
+              "description": "Backoff is a backoff strategy",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "duration": {
+                  "description": "Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. \"2m\", \"1h\")",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "factor": {
+                  "description": "Factor is a factor to multiply the base duration after each failed retry",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "format": "int64"
+                },
+                "maxDuration": {
+                  "description": "MaxDuration is the maximum amount of time allowed for the backoff strategy",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "limit": {
+              "description": "Limit is the maximum number of attempts when retrying a container",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            }
+          }
+        },
+        "sync": {
+          "description": "SyncOperation contains sync operation details.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "dryRun": {
+              "description": "DryRun will perform a `kubectl apply --dry-run` without actually performing the sync",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "manifests": {
+              "description": "Manifests is an optional field that overrides sync source with a local directory for development",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "prune": {
+              "description": "Prune deletes resources that are no longer tracked in git",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "resources": {
+              "description": "Resources describes which resources to sync",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "description": "SyncOperationResource contains resources to sync.",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "required": [
+                  "kind",
+                  "name"
+                ],
+                "properties": {
+                  "group": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            },
+            "revision": {
+              "description": "Revision is the revision in which to sync the application to. If omitted, will use the revision specified in app spec.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source": {
+              "description": "Source overrides the source definition set in the application. This is typically set in a Rollback operation and nil during a Sync operation",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "repoURL"
+              ],
+              "properties": {
+                "chart": {
+                  "description": "Chart is a Helm chart name",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "directory": {
+                  "description": "Directory holds path/directory specific options",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "jsonnet": {
+                      "description": "ApplicationSourceJsonnet holds jsonnet specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "extVars": {
+                          "description": "ExtVars is a list of Jsonnet External Variables",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "description": "JsonnetVar is a jsonnet variable",
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "required": [
+                              "name",
+                              "value"
+                            ],
+                            "properties": {
+                              "code": {
+                                "type": [
+                                  "boolean",
+                                  "null"
+                                ]
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "libs": {
+                          "description": "Additional library search dirs",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "tlas": {
+                          "description": "TLAS is a list of Jsonnet Top-level Arguments",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "description": "JsonnetVar is a jsonnet variable",
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "required": [
+                              "name",
+                              "value"
+                            ],
+                            "properties": {
+                              "code": {
+                                "type": [
+                                  "boolean",
+                                  "null"
+                                ]
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "recurse": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "helm": {
+                  "description": "Helm holds helm specific options",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "fileParameters": {
+                      "description": "FileParameters are file parameters to the helm template",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "description": "HelmFileParameter is a file parameter to a helm template",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "properties": {
+                          "name": {
+                            "description": "Name is the name of the helm parameter",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "path": {
+                            "description": "Path is the path value for the helm parameter",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "parameters": {
+                      "description": "Parameters are parameters to the helm template",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "description": "HelmParameter is a parameter to a helm template",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "properties": {
+                          "forceString": {
+                            "description": "ForceString determines whether to tell Helm to interpret booleans and numbers as strings",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "name": {
+                            "description": "Name is the name of the helm parameter",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "value": {
+                            "description": "Value is the value for the helm parameter",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "releaseName": {
+                      "description": "The Helm release name. If omitted it will use the application name",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "valueFiles": {
+                      "description": "ValuesFiles is a list of Helm value files to use when generating a template",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "values": {
+                      "description": "Values is Helm values, typically defined as a block",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "ksonnet": {
+                  "description": "Ksonnet holds ksonnet specific options",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "environment": {
+                      "description": "Environment is a ksonnet application environment name",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "parameters": {
+                      "description": "Parameters are a list of ksonnet component parameter override values",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "description": "KsonnetParameter is a ksonnet component parameter",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "required": [
+                          "name",
+                          "value"
+                        ],
+                        "properties": {
+                          "component": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "kustomize": {
+                  "description": "Kustomize holds kustomize specific options",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "commonLabels": {
+                      "description": "CommonLabels adds additional kustomize commonLabels",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "images": {
+                      "description": "Images are kustomize image overrides",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "namePrefix": {
+                      "description": "NamePrefix is a prefix appended to resources for kustomize apps",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "nameSuffix": {
+                      "description": "NameSuffix is a suffix appended to resources for kustomize apps",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "version": {
+                      "description": "Version contains optional Kustomize version",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "path": {
+                  "description": "Path is a directory path within the Git repository",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "plugin": {
+                  "description": "ConfigManagementPlugin holds config management plugin specific options",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "env": {
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "required": [
+                          "name",
+                          "value"
+                        ],
+                        "properties": {
+                          "name": {
+                            "description": "the name, usually uppercase",
+                            "type": "string"
+                          },
+                          "value": {
+                            "description": "the value",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "name": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "repoURL": {
+                  "description": "RepoURL is the repository URL of the application manifests",
+                  "type": "string"
+                },
+                "targetRevision": {
+                  "description": "TargetRevision defines the commit, tag, or branch in which to sync the application to. If omitted, will sync to HEAD",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "syncOptions": {
+              "description": "SyncOptions provide per-sync sync-options, e.g. Validate=false",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "syncStrategy": {
+              "description": "SyncStrategy describes how to perform the sync",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "apply": {
+                  "description": "Apply wil perform a `kubectl apply` to perform the sync.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "force": {
+                      "description": "Force indicates whether or not to supply the --force flag to `kubectl apply`. The --force flag deletes and re-create the resource, when PATCH encounters conflict and has retried for 5 times.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "hook": {
+                  "description": "Hook will submit any referenced resources to perform the sync. This is the default strategy",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "force": {
+                      "description": "Force indicates whether or not to supply the --force flag to `kubectl apply`. The --force flag deletes and re-create the resource, when PATCH encounters conflict and has retried for 5 times.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "spec": {
+      "description": "ApplicationSpec represents desired application state. Contains link to repository with application definition and additional parameters link definition revision.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "destination",
+        "project",
+        "source"
+      ],
+      "properties": {
+        "destination": {
+          "description": "Destination overrides the kubernetes server and namespace defined in the environment ksonnet app.yaml",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Name of the destination cluster which can be used instead of server (url) field",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "namespace": {
+              "description": "Namespace overrides the environment namespace value in the ksonnet app.yaml",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "server": {
+              "description": "Server overrides the environment server value in the ksonnet app.yaml",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "ignoreDifferences": {
+          "description": "IgnoreDifferences controls resources fields which should be ignored during comparison",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "ResourceIgnoreDifferences contains resource filter and list of json paths which should be ignored during comparison with live state.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "jsonPointers",
+              "kind"
+            ],
+            "properties": {
+              "group": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "jsonPointers": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "kind": {
+                "type": "string"
+              },
+              "name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "namespace": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "info": {
+          "description": "Infos contains a list of useful information (URLs, email addresses, and plain text) that relates to the application",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "project": {
+          "description": "Project is a application project name. Empty name means that application belongs to 'default' project.",
+          "type": "string"
+        },
+        "revisionHistoryLimit": {
+          "description": "This limits this number of items kept in the apps revision history. This should only be changed in exceptional circumstances. Setting to zero will store no history. This will reduce storage used. Increasing will increase the space used to store the history, so we do not recommend increasing it. Default is 10.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64"
+        },
+        "source": {
+          "description": "Source is a reference to the location ksonnet application definition",
+          "type": "object",
+          "required": [
+            "repoURL"
+          ],
+          "properties": {
+            "chart": {
+              "description": "Chart is a Helm chart name",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "directory": {
+              "description": "Directory holds path/directory specific options",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "jsonnet": {
+                  "description": "ApplicationSourceJsonnet holds jsonnet specific options",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "extVars": {
+                      "description": "ExtVars is a list of Jsonnet External Variables",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "description": "JsonnetVar is a jsonnet variable",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "required": [
+                          "name",
+                          "value"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "libs": {
+                      "description": "Additional library search dirs",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "tlas": {
+                      "description": "TLAS is a list of Jsonnet Top-level Arguments",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "description": "JsonnetVar is a jsonnet variable",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "required": [
+                          "name",
+                          "value"
+                        ],
+                        "properties": {
+                          "code": {
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "recurse": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "helm": {
+              "description": "Helm holds helm specific options",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "fileParameters": {
+                  "description": "FileParameters are file parameters to the helm template",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "description": "HelmFileParameter is a file parameter to a helm template",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "name": {
+                        "description": "Name is the name of the helm parameter",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "path": {
+                        "description": "Path is the path value for the helm parameter",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "parameters": {
+                  "description": "Parameters are parameters to the helm template",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "description": "HelmParameter is a parameter to a helm template",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "forceString": {
+                        "description": "ForceString determines whether to tell Helm to interpret booleans and numbers as strings",
+                        "type": [
+                          "boolean",
+                          "null"
+                        ]
+                      },
+                      "name": {
+                        "description": "Name is the name of the helm parameter",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "value": {
+                        "description": "Value is the value for the helm parameter",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "releaseName": {
+                  "description": "The Helm release name. If omitted it will use the application name",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "valueFiles": {
+                  "description": "ValuesFiles is a list of Helm value files to use when generating a template",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "values": {
+                  "description": "Values is Helm values, typically defined as a block",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "ksonnet": {
+              "description": "Ksonnet holds ksonnet specific options",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "environment": {
+                  "description": "Environment is a ksonnet application environment name",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "parameters": {
+                  "description": "Parameters are a list of ksonnet component parameter override values",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "description": "KsonnetParameter is a ksonnet component parameter",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "properties": {
+                      "component": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "kustomize": {
+              "description": "Kustomize holds kustomize specific options",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "commonLabels": {
+                  "description": "CommonLabels adds additional kustomize commonLabels",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "images": {
+                  "description": "Images are kustomize image overrides",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "namePrefix": {
+                  "description": "NamePrefix is a prefix appended to resources for kustomize apps",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "nameSuffix": {
+                  "description": "NameSuffix is a suffix appended to resources for kustomize apps",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "version": {
+                  "description": "Version contains optional Kustomize version",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "path": {
+              "description": "Path is a directory path within the Git repository",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "plugin": {
+              "description": "ConfigManagementPlugin holds config management plugin specific options",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "env": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "properties": {
+                      "name": {
+                        "description": "the name, usually uppercase",
+                        "type": "string"
+                      },
+                      "value": {
+                        "description": "the value",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "repoURL": {
+              "description": "RepoURL is the repository URL of the application manifests",
+              "type": "string"
+            },
+            "targetRevision": {
+              "description": "TargetRevision defines the commit, tag, or branch in which to sync the application to. If omitted, will sync to HEAD",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "syncPolicy": {
+          "description": "SyncPolicy controls when a sync will be performed",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "automated": {
+              "description": "Automated will keep an application synced to the target revision",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "prune": {
+                  "description": "Prune will prune resources automatically as part of automated sync (default: false)",
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "selfHeal": {
+                  "description": "SelfHeal enables auto-syncing if  (default: false)",
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "retry": {
+              "description": "Retry controls failed sync retry behavior",
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "backoff": {
+                  "description": "Backoff is a backoff strategy",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "duration": {
+                      "description": "Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. \"2m\", \"1h\")",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "factor": {
+                      "description": "Factor is a factor to multiply the base duration after each failed retry",
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "format": "int64"
+                    },
+                    "maxDuration": {
+                      "description": "MaxDuration is the maximum amount of time allowed for the backoff strategy",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "limit": {
+                  "description": "Limit is the maximum number of attempts when retrying a container",
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "format": "int64"
+                }
+              }
+            },
+            "syncOptions": {
+              "description": "Options allow you to specify whole app sync-options",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "description": "ApplicationStatus contains information about application sync, health status",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "conditions": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "ApplicationCondition contains details about current application condition",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "message",
+              "type"
+            ],
+            "properties": {
+              "lastTransitionTime": {
+                "description": "LastTransitionTime is the time the condition was first observed.",
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "message": {
+                "description": "Message contains human-readable message indicating details about condition",
+                "type": "string"
+              },
+              "type": {
+                "description": "Type is an application condition type",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "health": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "message": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status": {
+              "description": "Represents resource health status",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "history": {
+          "description": "RevisionHistories is a array of history, oldest first and newest last",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "RevisionHistory contains information relevant to an application deployment",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "deployedAt",
+              "id",
+              "revision"
+            ],
+            "properties": {
+              "deployStartedAt": {
+                "description": "DeployStartedAt holds the time the deployment started",
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "deployedAt": {
+                "description": "DeployedAt holds the time the deployment completed",
+                "type": "string",
+                "format": "date-time"
+              },
+              "id": {
+                "description": "ID is an auto incrementing identifier of the RevisionHistory",
+                "type": "integer",
+                "format": "int64"
+              },
+              "revision": {
+                "description": "Revision holds the revision of the sync",
+                "type": "string"
+              },
+              "source": {
+                "description": "ApplicationSource contains information about github repository, path within repository and target application environment.",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "required": [
+                  "repoURL"
+                ],
+                "properties": {
+                  "chart": {
+                    "description": "Chart is a Helm chart name",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "directory": {
+                    "description": "Directory holds path/directory specific options",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "jsonnet": {
+                        "description": "ApplicationSourceJsonnet holds jsonnet specific options",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "properties": {
+                          "extVars": {
+                            "description": "ExtVars is a list of Jsonnet External Variables",
+                            "type": [
+                              "array",
+                              "null"
+                            ],
+                            "items": {
+                              "description": "JsonnetVar is a jsonnet variable",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "required": [
+                                "name",
+                                "value"
+                              ],
+                              "properties": {
+                                "code": {
+                                  "type": [
+                                    "boolean",
+                                    "null"
+                                  ]
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "libs": {
+                            "description": "Additional library search dirs",
+                            "type": [
+                              "array",
+                              "null"
+                            ],
+                            "items": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "tlas": {
+                            "description": "TLAS is a list of Jsonnet Top-level Arguments",
+                            "type": [
+                              "array",
+                              "null"
+                            ],
+                            "items": {
+                              "description": "JsonnetVar is a jsonnet variable",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "required": [
+                                "name",
+                                "value"
+                              ],
+                              "properties": {
+                                "code": {
+                                  "type": [
+                                    "boolean",
+                                    "null"
+                                  ]
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "recurse": {
+                        "type": [
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "helm": {
+                    "description": "Helm holds helm specific options",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "fileParameters": {
+                        "description": "FileParameters are file parameters to the helm template",
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "description": "HelmFileParameter is a file parameter to a helm template",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "name": {
+                              "description": "Name is the name of the helm parameter",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "path": {
+                              "description": "Path is the path value for the helm parameter",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      "parameters": {
+                        "description": "Parameters are parameters to the helm template",
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "description": "HelmParameter is a parameter to a helm template",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "forceString": {
+                              "description": "ForceString determines whether to tell Helm to interpret booleans and numbers as strings",
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            },
+                            "name": {
+                              "description": "Name is the name of the helm parameter",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "value": {
+                              "description": "Value is the value for the helm parameter",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      "releaseName": {
+                        "description": "The Helm release name. If omitted it will use the application name",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "valueFiles": {
+                        "description": "ValuesFiles is a list of Helm value files to use when generating a template",
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "values": {
+                        "description": "Values is Helm values, typically defined as a block",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "ksonnet": {
+                    "description": "Ksonnet holds ksonnet specific options",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "environment": {
+                        "description": "Environment is a ksonnet application environment name",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "parameters": {
+                        "description": "Parameters are a list of ksonnet component parameter override values",
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "description": "KsonnetParameter is a ksonnet component parameter",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "required": [
+                            "name",
+                            "value"
+                          ],
+                          "properties": {
+                            "component": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "kustomize": {
+                    "description": "Kustomize holds kustomize specific options",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "commonLabels": {
+                        "description": "CommonLabels adds additional kustomize commonLabels",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "additionalProperties": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "images": {
+                        "description": "Images are kustomize image overrides",
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "namePrefix": {
+                        "description": "NamePrefix is a prefix appended to resources for kustomize apps",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "nameSuffix": {
+                        "description": "NameSuffix is a suffix appended to resources for kustomize apps",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "version": {
+                        "description": "Version contains optional Kustomize version",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "path": {
+                    "description": "Path is a directory path within the Git repository",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "plugin": {
+                    "description": "ConfigManagementPlugin holds config management plugin specific options",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "env": {
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "required": [
+                            "name",
+                            "value"
+                          ],
+                          "properties": {
+                            "name": {
+                              "description": "the name, usually uppercase",
+                              "type": "string"
+                            },
+                            "value": {
+                              "description": "the value",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "repoURL": {
+                    "description": "RepoURL is the repository URL of the application manifests",
+                    "type": "string"
+                  },
+                  "targetRevision": {
+                    "description": "TargetRevision defines the commit, tag, or branch in which to sync the application to. If omitted, will sync to HEAD",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "observedAt": {
+          "description": "ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "operationState": {
+          "description": "OperationState contains information about state of currently performing operation on application.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "operation",
+            "phase",
+            "startedAt"
+          ],
+          "properties": {
+            "finishedAt": {
+              "description": "FinishedAt contains time of operation completion",
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "message": {
+              "description": "Message hold any pertinent messages when attempting to perform operation (typically errors).",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "operation": {
+              "description": "Operation is the original requested operation",
+              "type": "object",
+              "properties": {
+                "info": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "initiatedBy": {
+                  "description": "OperationInitiator holds information about the operation initiator",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "automated": {
+                      "description": "Automated is set to true if operation was initiated automatically by the application controller.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "username": {
+                      "description": "Name of a user who started operation.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "retry": {
+                  "description": "Retry controls failed sync retry behavior",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "backoff": {
+                      "description": "Backoff is a backoff strategy",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "duration": {
+                          "description": "Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. \"2m\", \"1h\")",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "factor": {
+                          "description": "Factor is a factor to multiply the base duration after each failed retry",
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "format": "int64"
+                        },
+                        "maxDuration": {
+                          "description": "MaxDuration is the maximum amount of time allowed for the backoff strategy",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "limit": {
+                      "description": "Limit is the maximum number of attempts when retrying a container",
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "format": "int64"
+                    }
+                  }
+                },
+                "sync": {
+                  "description": "SyncOperation contains sync operation details.",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "dryRun": {
+                      "description": "DryRun will perform a `kubectl apply --dry-run` without actually performing the sync",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "manifests": {
+                      "description": "Manifests is an optional field that overrides sync source with a local directory for development",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "prune": {
+                      "description": "Prune deletes resources that are no longer tracked in git",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "resources": {
+                      "description": "Resources describes which resources to sync",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "description": "SyncOperationResource contains resources to sync.",
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "required": [
+                          "kind",
+                          "name"
+                        ],
+                        "properties": {
+                          "group": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "kind": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "namespace": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "revision": {
+                      "description": "Revision is the revision in which to sync the application to. If omitted, will use the revision specified in app spec.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "source": {
+                      "description": "Source overrides the source definition set in the application. This is typically set in a Rollback operation and nil during a Sync operation",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "required": [
+                        "repoURL"
+                      ],
+                      "properties": {
+                        "chart": {
+                          "description": "Chart is a Helm chart name",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "directory": {
+                          "description": "Directory holds path/directory specific options",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "jsonnet": {
+                              "description": "ApplicationSourceJsonnet holds jsonnet specific options",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "extVars": {
+                                  "description": "ExtVars is a list of Jsonnet External Variables",
+                                  "type": [
+                                    "array",
+                                    "null"
+                                  ],
+                                  "items": {
+                                    "description": "JsonnetVar is a jsonnet variable",
+                                    "type": [
+                                      "object",
+                                      "null"
+                                    ],
+                                    "required": [
+                                      "name",
+                                      "value"
+                                    ],
+                                    "properties": {
+                                      "code": {
+                                        "type": [
+                                          "boolean",
+                                          "null"
+                                        ]
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "libs": {
+                                  "description": "Additional library search dirs",
+                                  "type": [
+                                    "array",
+                                    "null"
+                                  ],
+                                  "items": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "tlas": {
+                                  "description": "TLAS is a list of Jsonnet Top-level Arguments",
+                                  "type": [
+                                    "array",
+                                    "null"
+                                  ],
+                                  "items": {
+                                    "description": "JsonnetVar is a jsonnet variable",
+                                    "type": [
+                                      "object",
+                                      "null"
+                                    ],
+                                    "required": [
+                                      "name",
+                                      "value"
+                                    ],
+                                    "properties": {
+                                      "code": {
+                                        "type": [
+                                          "boolean",
+                                          "null"
+                                        ]
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "recurse": {
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            }
+                          }
+                        },
+                        "helm": {
+                          "description": "Helm holds helm specific options",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "fileParameters": {
+                              "description": "FileParameters are file parameters to the helm template",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "description": "HelmFileParameter is a file parameter to a helm template",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "name": {
+                                    "description": "Name is the name of the helm parameter",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "path": {
+                                    "description": "Path is the path value for the helm parameter",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "parameters": {
+                              "description": "Parameters are parameters to the helm template",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "description": "HelmParameter is a parameter to a helm template",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "forceString": {
+                                    "description": "ForceString determines whether to tell Helm to interpret booleans and numbers as strings",
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "name": {
+                                    "description": "Name is the name of the helm parameter",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "value": {
+                                    "description": "Value is the value for the helm parameter",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "releaseName": {
+                              "description": "The Helm release name. If omitted it will use the application name",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "valueFiles": {
+                              "description": "ValuesFiles is a list of Helm value files to use when generating a template",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "values": {
+                              "description": "Values is Helm values, typically defined as a block",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          }
+                        },
+                        "ksonnet": {
+                          "description": "Ksonnet holds ksonnet specific options",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "environment": {
+                              "description": "Environment is a ksonnet application environment name",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "parameters": {
+                              "description": "Parameters are a list of ksonnet component parameter override values",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "description": "KsonnetParameter is a ksonnet component parameter",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "required": [
+                                  "name",
+                                  "value"
+                                ],
+                                "properties": {
+                                  "component": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "kustomize": {
+                          "description": "Kustomize holds kustomize specific options",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "commonLabels": {
+                              "description": "CommonLabels adds additional kustomize commonLabels",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "additionalProperties": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "images": {
+                              "description": "Images are kustomize image overrides",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "namePrefix": {
+                              "description": "NamePrefix is a prefix appended to resources for kustomize apps",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nameSuffix": {
+                              "description": "NameSuffix is a suffix appended to resources for kustomize apps",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "version": {
+                              "description": "Version contains optional Kustomize version",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          }
+                        },
+                        "path": {
+                          "description": "Path is a directory path within the Git repository",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "plugin": {
+                          "description": "ConfigManagementPlugin holds config management plugin specific options",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "env": {
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "required": [
+                                  "name",
+                                  "value"
+                                ],
+                                "properties": {
+                                  "name": {
+                                    "description": "the name, usually uppercase",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "description": "the value",
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "name": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          }
+                        },
+                        "repoURL": {
+                          "description": "RepoURL is the repository URL of the application manifests",
+                          "type": "string"
+                        },
+                        "targetRevision": {
+                          "description": "TargetRevision defines the commit, tag, or branch in which to sync the application to. If omitted, will sync to HEAD",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "syncOptions": {
+                      "description": "SyncOptions provide per-sync sync-options, e.g. Validate=false",
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "syncStrategy": {
+                      "description": "SyncStrategy describes how to perform the sync",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "apply": {
+                          "description": "Apply wil perform a `kubectl apply` to perform the sync.",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "force": {
+                              "description": "Force indicates whether or not to supply the --force flag to `kubectl apply`. The --force flag deletes and re-create the resource, when PATCH encounters conflict and has retried for 5 times.",
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            }
+                          }
+                        },
+                        "hook": {
+                          "description": "Hook will submit any referenced resources to perform the sync. This is the default strategy",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "force": {
+                              "description": "Force indicates whether or not to supply the --force flag to `kubectl apply`. The --force flag deletes and re-create the resource, when PATCH encounters conflict and has retried for 5 times.",
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "phase": {
+              "description": "Phase is the current phase of the operation",
+              "type": "string"
+            },
+            "retryCount": {
+              "description": "RetryCount contains time of operation retries",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "startedAt": {
+              "description": "StartedAt contains time of operation start",
+              "type": "string",
+              "format": "date-time"
+            },
+            "syncResult": {
+              "description": "SyncResult is the result of a Sync operation",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "revision"
+              ],
+              "properties": {
+                "resources": {
+                  "description": "Resources holds the sync result of each individual resource",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "description": "ResourceResult holds the operation result details of a specific resource",
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "required": [
+                      "group",
+                      "kind",
+                      "name",
+                      "namespace",
+                      "version"
+                    ],
+                    "properties": {
+                      "group": {
+                        "type": "string"
+                      },
+                      "hookPhase": {
+                        "description": "the state of any operation associated with this resource OR hook note: can contain values for non-hook resources",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "hookType": {
+                        "description": "the type of the hook, empty for non-hook resources",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "kind": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "description": "message for the last sync OR operation",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "namespace": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "the final result of the sync, this is be empty if the resources is yet to be applied/pruned and is always zero-value for hooks",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "syncPhase": {
+                        "description": "indicates the particular phase of the sync that this is for",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "version": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "revision": {
+                  "description": "Revision holds the revision of the sync",
+                  "type": "string"
+                },
+                "source": {
+                  "description": "Source records the application source information of the sync, used for comparing auto-sync",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "repoURL"
+                  ],
+                  "properties": {
+                    "chart": {
+                      "description": "Chart is a Helm chart name",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "directory": {
+                      "description": "Directory holds path/directory specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "jsonnet": {
+                          "description": "ApplicationSourceJsonnet holds jsonnet specific options",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "extVars": {
+                              "description": "ExtVars is a list of Jsonnet External Variables",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "description": "JsonnetVar is a jsonnet variable",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "required": [
+                                  "name",
+                                  "value"
+                                ],
+                                "properties": {
+                                  "code": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "libs": {
+                              "description": "Additional library search dirs",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "tlas": {
+                              "description": "TLAS is a list of Jsonnet Top-level Arguments",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "description": "JsonnetVar is a jsonnet variable",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "required": [
+                                  "name",
+                                  "value"
+                                ],
+                                "properties": {
+                                  "code": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "recurse": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "helm": {
+                      "description": "Helm holds helm specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "fileParameters": {
+                          "description": "FileParameters are file parameters to the helm template",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "description": "HelmFileParameter is a file parameter to a helm template",
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "name": {
+                                "description": "Name is the name of the helm parameter",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "path": {
+                                "description": "Path is the path value for the helm parameter",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "parameters": {
+                          "description": "Parameters are parameters to the helm template",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "description": "HelmParameter is a parameter to a helm template",
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "forceString": {
+                                "description": "ForceString determines whether to tell Helm to interpret booleans and numbers as strings",
+                                "type": [
+                                  "boolean",
+                                  "null"
+                                ]
+                              },
+                              "name": {
+                                "description": "Name is the name of the helm parameter",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "value": {
+                                "description": "Value is the value for the helm parameter",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "releaseName": {
+                          "description": "The Helm release name. If omitted it will use the application name",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "valueFiles": {
+                          "description": "ValuesFiles is a list of Helm value files to use when generating a template",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "values": {
+                          "description": "Values is Helm values, typically defined as a block",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "ksonnet": {
+                      "description": "Ksonnet holds ksonnet specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "environment": {
+                          "description": "Environment is a ksonnet application environment name",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "parameters": {
+                          "description": "Parameters are a list of ksonnet component parameter override values",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "description": "KsonnetParameter is a ksonnet component parameter",
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "required": [
+                              "name",
+                              "value"
+                            ],
+                            "properties": {
+                              "component": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "kustomize": {
+                      "description": "Kustomize holds kustomize specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "commonLabels": {
+                          "description": "CommonLabels adds additional kustomize commonLabels",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "additionalProperties": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "images": {
+                          "description": "Images are kustomize image overrides",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "namePrefix": {
+                          "description": "NamePrefix is a prefix appended to resources for kustomize apps",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "nameSuffix": {
+                          "description": "NameSuffix is a suffix appended to resources for kustomize apps",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "version": {
+                          "description": "Version contains optional Kustomize version",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "path": {
+                      "description": "Path is a directory path within the Git repository",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "plugin": {
+                      "description": "ConfigManagementPlugin holds config management plugin specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "env": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "required": [
+                              "name",
+                              "value"
+                            ],
+                            "properties": {
+                              "name": {
+                                "description": "the name, usually uppercase",
+                                "type": "string"
+                              },
+                              "value": {
+                                "description": "the value",
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "repoURL": {
+                      "description": "RepoURL is the repository URL of the application manifests",
+                      "type": "string"
+                    },
+                    "targetRevision": {
+                      "description": "TargetRevision defines the commit, tag, or branch in which to sync the application to. If omitted, will sync to HEAD",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "reconciledAt": {
+          "description": "ReconciledAt indicates when the application state was reconciled using the latest git version",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "resources": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "ResourceStatus holds the current sync and health status of a resource",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "group": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "health": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "message": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "status": {
+                    "description": "Represents resource health status",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "hook": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "kind": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "namespace": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "requiresPruning": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "status": {
+                "description": "SyncStatusCode is a type which represents possible comparison results",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "version": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "sourceType": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "summary": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "externalURLs": {
+              "description": "ExternalURLs holds all external URLs of application child resources.",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "images": {
+              "description": "Images holds all images of application child resources.",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "sync": {
+          "description": "SyncStatus is a comparison result of application spec and deployed application.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "comparedTo": {
+              "description": "ComparedTo contains application source and target which was used for resources comparison",
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "destination",
+                "source"
+              ],
+              "properties": {
+                "destination": {
+                  "description": "ApplicationDestination contains deployment destination information",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the destination cluster which can be used instead of server (url) field",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "namespace": {
+                      "description": "Namespace overrides the environment namespace value in the ksonnet app.yaml",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "server": {
+                      "description": "Server overrides the environment server value in the ksonnet app.yaml",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "source": {
+                  "description": "ApplicationSource contains information about github repository, path within repository and target application environment.",
+                  "type": "object",
+                  "required": [
+                    "repoURL"
+                  ],
+                  "properties": {
+                    "chart": {
+                      "description": "Chart is a Helm chart name",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "directory": {
+                      "description": "Directory holds path/directory specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "jsonnet": {
+                          "description": "ApplicationSourceJsonnet holds jsonnet specific options",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "extVars": {
+                              "description": "ExtVars is a list of Jsonnet External Variables",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "description": "JsonnetVar is a jsonnet variable",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "required": [
+                                  "name",
+                                  "value"
+                                ],
+                                "properties": {
+                                  "code": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "libs": {
+                              "description": "Additional library search dirs",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "tlas": {
+                              "description": "TLAS is a list of Jsonnet Top-level Arguments",
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "description": "JsonnetVar is a jsonnet variable",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "required": [
+                                  "name",
+                                  "value"
+                                ],
+                                "properties": {
+                                  "code": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "recurse": {
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "helm": {
+                      "description": "Helm holds helm specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "fileParameters": {
+                          "description": "FileParameters are file parameters to the helm template",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "description": "HelmFileParameter is a file parameter to a helm template",
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "name": {
+                                "description": "Name is the name of the helm parameter",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "path": {
+                                "description": "Path is the path value for the helm parameter",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "parameters": {
+                          "description": "Parameters are parameters to the helm template",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "description": "HelmParameter is a parameter to a helm template",
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "forceString": {
+                                "description": "ForceString determines whether to tell Helm to interpret booleans and numbers as strings",
+                                "type": [
+                                  "boolean",
+                                  "null"
+                                ]
+                              },
+                              "name": {
+                                "description": "Name is the name of the helm parameter",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "value": {
+                                "description": "Value is the value for the helm parameter",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "releaseName": {
+                          "description": "The Helm release name. If omitted it will use the application name",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "valueFiles": {
+                          "description": "ValuesFiles is a list of Helm value files to use when generating a template",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "values": {
+                          "description": "Values is Helm values, typically defined as a block",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "ksonnet": {
+                      "description": "Ksonnet holds ksonnet specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "environment": {
+                          "description": "Environment is a ksonnet application environment name",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "parameters": {
+                          "description": "Parameters are a list of ksonnet component parameter override values",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "description": "KsonnetParameter is a ksonnet component parameter",
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "required": [
+                              "name",
+                              "value"
+                            ],
+                            "properties": {
+                              "component": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "kustomize": {
+                      "description": "Kustomize holds kustomize specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "commonLabels": {
+                          "description": "CommonLabels adds additional kustomize commonLabels",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "additionalProperties": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "images": {
+                          "description": "Images are kustomize image overrides",
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "namePrefix": {
+                          "description": "NamePrefix is a prefix appended to resources for kustomize apps",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "nameSuffix": {
+                          "description": "NameSuffix is a suffix appended to resources for kustomize apps",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "version": {
+                          "description": "Version contains optional Kustomize version",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "path": {
+                      "description": "Path is a directory path within the Git repository",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "plugin": {
+                      "description": "ConfigManagementPlugin holds config management plugin specific options",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "env": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "required": [
+                              "name",
+                              "value"
+                            ],
+                            "properties": {
+                              "name": {
+                                "description": "the name, usually uppercase",
+                                "type": "string"
+                              },
+                              "value": {
+                                "description": "the value",
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "repoURL": {
+                      "description": "RepoURL is the repository URL of the application manifests",
+                      "type": "string"
+                    },
+                    "targetRevision": {
+                      "description": "TargetRevision defines the commit, tag, or branch in which to sync the application to. If omitted, will sync to HEAD",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "revision": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status": {
+              "description": "SyncStatusCode is a type which represents possible comparison results",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "argoproj.io",
+      "kind": "Application",
+      "version": "v1alpha1"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

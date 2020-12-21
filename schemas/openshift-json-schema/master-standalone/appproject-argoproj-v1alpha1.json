@@ -1,0 +1,458 @@
+{
+  "description": "AppProject provides a logical grouping of applications, providing controls for: * where the apps may deploy to (cluster whitelist) * what may be deployed (repository whitelist, resource whitelist/blacklist) * who can access these applications (roles, OIDC group claims bindings) * and what they can do (RBAC policies) * automation access to these roles (JWT tokens)",
+  "type": "object",
+  "required": [
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "argoproj.io/v1alpha1"
+      ]
+    },
+    "kind": {
+      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "AppProject"
+      ]
+    },
+    "metadata": {
+      "description": "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
+      "$ref": "_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta"
+    },
+    "spec": {
+      "description": "AppProjectSpec is the specification of an AppProject",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "clusterResourceBlacklist": {
+          "description": "ClusterResourceBlacklist contains list of blacklisted cluster level resources",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "group",
+              "kind"
+            ],
+            "properties": {
+              "group": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "clusterResourceWhitelist": {
+          "description": "ClusterResourceWhitelist contains list of whitelisted cluster level resources",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "group",
+              "kind"
+            ],
+            "properties": {
+              "group": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": {
+          "description": "Description contains optional project description",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "destinations": {
+          "description": "Destinations contains list of destinations available for deployment",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "ApplicationDestination contains deployment destination information",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "name": {
+                "description": "Name of the destination cluster which can be used instead of server (url) field",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "namespace": {
+                "description": "Namespace overrides the environment namespace value in the ksonnet app.yaml",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "server": {
+                "description": "Server overrides the environment server value in the ksonnet app.yaml",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "namespaceResourceBlacklist": {
+          "description": "NamespaceResourceBlacklist contains list of blacklisted namespace level resources",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "group",
+              "kind"
+            ],
+            "properties": {
+              "group": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "namespaceResourceWhitelist": {
+          "description": "NamespaceResourceWhitelist contains list of whitelisted namespace level resources",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "group",
+              "kind"
+            ],
+            "properties": {
+              "group": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "orphanedResources": {
+          "description": "OrphanedResources specifies if controller should monitor orphaned resources of apps in this project",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "ignore": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "group": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "kind": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            },
+            "warn": {
+              "description": "Warn indicates if warning condition should be created for apps which have orphaned resources",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          }
+        },
+        "roles": {
+          "description": "Roles are user defined RBAC roles associated with this project",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "ProjectRole represents a role that has access to a project",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "description": {
+                "description": "Description is a description of the role",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "groups": {
+                "description": "Groups are a list of OIDC group claims bound to this role",
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "jwtTokens": {
+                "description": "JWTTokens are a list of generated JWT tokens bound to this role",
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "description": "JWTToken holds the issuedAt and expiresAt values of a token",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "iat"
+                  ],
+                  "properties": {
+                    "exp": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "format": "int64"
+                    },
+                    "iat": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              },
+              "name": {
+                "description": "Name is a name for this role",
+                "type": "string"
+              },
+              "policies": {
+                "description": "Policies Stores a list of casbin formated strings that define access policies for the role in the project",
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "signatureKeys": {
+          "description": "List of PGP key IDs that commits to be synced to must be signed with",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "SignatureKey is the specification of a key required to verify commit signatures with",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "keyID"
+            ],
+            "properties": {
+              "keyID": {
+                "description": "The ID of the key in hexadecimal notation",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "sourceRepos": {
+          "description": "SourceRepos contains list of repository URLs which can be used for deployment",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "syncWindows": {
+          "description": "SyncWindows controls when syncs can be run for apps in this project",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "description": "SyncWindow contains the kind, time, duration and attributes that are used to assign the syncWindows to apps",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "applications": {
+                "description": "Applications contains a list of applications that the window will apply to",
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "clusters": {
+                "description": "Clusters contains a list of clusters that the window will apply to",
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "duration": {
+                "description": "Duration is the amount of time the sync window will be open",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "kind": {
+                "description": "Kind defines if the window allows or blocks syncs",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "manualSync": {
+                "description": "ManualSync enables manual syncs when they would otherwise be blocked",
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "namespaces": {
+                "description": "Namespaces contains a list of namespaces that the window will apply to",
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "schedule": {
+                "description": "Schedule is the time the window will begin, specified in cron format",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-kubernetes-group-version-kind": [
+    {
+      "group": "argoproj.io",
+      "kind": "AppProject",
+      "version": "v1alpha1"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

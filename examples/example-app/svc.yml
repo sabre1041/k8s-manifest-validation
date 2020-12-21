@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: Exposes and load balances the application pods
+    openshift.io/generated-by: OpenShiftNewApp
+  labels:
+    app: httpd-example
+    template: httpd-example
+  name: httpd-example
+spec:
+  ports:
+    - name: web
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    name: httpd-example
+  sessionAffinity: None
+  type: ClusterIP

@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: kubeval-pipeline
+spec:
+  params:
+    - name: url
+      description: git URL
+      default: https://github.com/sabre1041/k8s-manifest-validation
+    - name: revision
+      description: git revision
+      default: main
+  workspaces:
+    - name: git-source
+  tasks:
+    - name: git-clone
+      taskRef:
+        name: git-clone
+        kind: ClusterTask
+      params:
+        - name: url
+          value: $(params.url)
+        - name: revision
+          value: $(params.revision)
+      workspaces:
+        - name: output
+          workspace: git-source
+    - name: kubeval
+      taskRef:
+        name: kubeval
+      runAfter:
+        - git-clone
+      workspaces:
+        - name: source
+          workspace: git-source

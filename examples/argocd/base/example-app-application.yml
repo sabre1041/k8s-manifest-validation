@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-app
+spec:
+  destination:
+    namespace: httpd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: examples/example-app
+    repoURL: https://github.com/sabre1041/k8s-manifest-validation.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
