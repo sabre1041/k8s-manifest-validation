@@ -17,7 +17,7 @@ spec:
       ignoreDifferences: |
         jsonPointers:
         - /spec/host
-    apps.openshift.io/DeploymentConfig
+    apps.openshift.io/DeploymentConfig:
       ignoreDifferences: |
         jsonPointers:
         - /spec/template/spec/containers/0/image

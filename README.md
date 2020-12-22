@@ -14,3 +14,43 @@ The following components are found in this repository
 
 * [kubeval](https://github.com/instrumenta/kubeval) - Tool for validating Kubernetes manifests
 * [openapi2jsonschema](https://github.com/instrumenta/openapi2jsonschema) - Tool for converting from OpenAPI to JSON Schema
+
+## Demonstrations
+
+The following demonstrations are found within this repository
+### CI Validation using Tekton
+
+Validation of manifests using [Tekton](https://tekton.dev/) / [OpenShift Pipelines](https://docs.openshift.com/container-platform/4.6/pipelines/understanding-openshift-pipelines.html)
+
+Create the resources:
+
+```
+$ oc new-project manifest-validation
+$ oc apply -f ci/tekton/storage/pvc.yml
+$ oc apply -f ci/tekton/tasks/kubeval-task.yml
+$ oc apply -f ci/tekton/pipelines/kubeval-pipeline.yml
+```
+
+Using the Tekton CLI, start the pipeline and follow the logs
+
+```
+$ tkn pipeline start kubeval-pipeline --use-param-defaults --workspace name=git-source,claimName=git-tekton --showlog
+```
+
+### Example application
+
+With the manifests validated in the prior section, Argo CD can be used to deploy resources into the cluster. Use the following steps to deploy Argo CD and manage an example application
+
+Deploy the Operator into a new project called `argocd`
+
+```
+$ oc apply -k examples/argocd-operator/base
+```
+
+Create the instance of Argo CD and an Application to manage the example application
+
+```
+$ oc apply -k examples/argocd/base
+```
+
+In a few moments, Argo CD will be provisioned and create a new project called _httpd_ along with building and deploying an instance of Apache HTTPD.
