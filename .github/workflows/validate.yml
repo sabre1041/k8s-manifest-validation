@@ -1,0 +1,19 @@
+name: group-sync-operator
+on: [push, pull_request]
+jobs:
+  validate:
+    name: "Validate Manifests"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Tools
+        env:
+          OC_VERSION: "4.6.7"
+          KUBEVAL_VERSION: "0.15.0"
+        run: |
+          cd $(mktemp -d)
+          curl -SsL https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${OC_VERSION}/openshift-client-linux.tar.gz | tar xz
+          sudo mv oc /usr/local/bin
+          curl -SsL https://github.com/instrumenta/kubeval/releases/download/${KUBEVAL_VERSION}/kubeval-linux-amd64.tar.gz | tar xz
+          sudo mv kubeval /usr/local/bin
+      - name: Validate Manifests
+        run: ${GITHUB_WORKSPACE}/scripts/validate_resources.sh -d=${GITHUB_WORKSPACE}/examples -sl=${GITHUB_WORKSPACE}/schemas/openshift-json-schema -e
