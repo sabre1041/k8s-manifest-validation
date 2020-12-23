@@ -1,4 +1,4 @@
-name: group-sync-operator
+name: k8s-manifest-validation
 on: [push, pull_request]
 jobs:
   validate:
@@ -15,5 +15,8 @@ jobs:
           sudo mv oc /usr/local/bin
           curl -SsL https://github.com/instrumenta/kubeval/releases/download/${KUBEVAL_VERSION}/kubeval-linux-amd64.tar.gz | tar xz
           sudo mv kubeval /usr/local/bin
+      - name: Check out code
+        uses: actions/checkout@v2
       - name: Validate Manifests
-        run: ${GITHUB_WORKSPACE}/scripts/validate_resources.sh -d=${GITHUB_WORKSPACE}/examples -sl=${GITHUB_WORKSPACE}/schemas/openshift-json-schema -e
+        run: |
+          ${GITHUB_WORKSPACE}/scripts/validate_resources.sh -d=${GITHUB_WORKSPACE}/examples -sl=${GITHUB_WORKSPACE}/schemas/openshift-json-schema -e
