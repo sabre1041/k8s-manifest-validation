@@ -9,10 +9,14 @@ jobs:
         env:
           OC_VERSION: "4.6.7"
           KUBEVAL_VERSION: "0.15.0"
+          HELM_VERSION: "3.4.2"
         run: |
+          set -e
           cd $(mktemp -d)
           curl -SsL https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${OC_VERSION}/openshift-client-linux.tar.gz | tar xz
           sudo mv oc /usr/local/bin
+          curl -SsL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar xz
+          sudo mv linux-amd64/helm /usr/local/bin
           curl -SsL https://github.com/instrumenta/kubeval/releases/download/${KUBEVAL_VERSION}/kubeval-linux-amd64.tar.gz | tar xz
           sudo mv kubeval /usr/local/bin
       - name: Check out code
