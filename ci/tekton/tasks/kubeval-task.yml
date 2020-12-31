@@ -46,7 +46,7 @@ spec:
           curl -SsL https://github.com/instrumenta/kubeval/releases/download/$(params.kubeval_version)/kubeval-linux-amd64.tar.gz | tar xz -C $(params.binaries_dir)
           curl -SsL https://get.helm.sh/helm-v$(params.helm_version)-linux-amd64.tar.gz | tar xz -C $(params.binaries_dir)
           mv $(params.binaries_dir)/linux-amd64/helm $(params.binaries_dir)/
-          rm $(params.binaries_dir)/linux-amd64/
+          rm -Rf $(params.binaries_dir)/linux-amd64/
 
           echo -e "\nValidating Manifests"
 

@@ -37,7 +37,7 @@ Using the Tekton CLI, start the pipeline and follow the logs
 $ tkn pipeline start kubeval-pipeline --use-param-defaults --workspace name=git-source,claimName=git-tekton --showlog
 ```
 
-### Example application
+### Example applications
 
 With the manifests validated in the prior section, Argo CD can be used to deploy resources into the cluster. Use the following steps to deploy Argo CD and manage an example application
 
@@ -53,4 +53,7 @@ Create the instance of Argo CD and an Application to manage the example applicat
 $ oc apply -k examples/argocd/base
 ```
 
-In a few moments, Argo CD will be provisioned and create a new project called _httpd_ along with building and deploying an instance of Apache HTTPD.
+In a few moments, Argo CD will be provisioned along with series of applications that build and deploy an instance of Apache HTTPD:
+
+* [Kustomize based](examples/example-app)
+* [Helm based](examples/example-app-helm)
