@@ -1,0 +1,36 @@
+{{- if .Values.build.enabled }}
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: {{ include "example-app-helm.fullname" . }}
+  labels:
+    {{- include "example-app-helm.labels" . | nindent 4 }}
+spec:
+  failedBuildsHistoryLimit: 5
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ include "example-app-helm.imageName" . }}
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: {{ .Values.build.uri }}
+      ref: {{ .Values.build.ref }}
+{{- if .Values.build.contextDir }}
+    contextDir: {{ .Values.build.contextDir }}
+{{- end }}
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: {{ .Values.build.imageStreamTag.name }}
+        namespace: {{ .Values.build.imageStreamTag.namespace }}
+    type: Source
+  successfulBuildsHistoryLimit: 5
+  triggers:
+    - type: ImageChange
+    - type: ConfigChange
+{{- end }}

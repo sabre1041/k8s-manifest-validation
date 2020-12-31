@@ -21,3 +21,7 @@ spec:
       ignoreDifferences: |
         jsonPointers:
         - /spec/template/spec/containers/0/image
+    apps/Deployment:
+      ignoreDifferences: |
+        jsonPointers:
+        - /spec/template/spec/containers/0/image

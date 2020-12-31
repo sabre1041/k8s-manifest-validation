@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "example-app-helm.fullname" . }}
+  labels:
+    {{- include "example-app-helm.labels" . | nindent 4 }}
+spec:
+  to:
+    kind: Service
+    name: {{ include "example-app-helm.name" . }}
+  port:
+    targetPort: {{ tpl .Values.deploy.route.targetPort . }}
+{{- if .Values.deploy.route.tls.enabled }}
+  tls:
+    termination: {{ .Values.deploy.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.deploy.route.tls.insecureEdgeTerminationPolicy }}
+{{- end }}

@@ -14,6 +14,10 @@ spec:
       type: string
       description: Kubeval Version
       default: "0.15.0"
+    - name: helm_version
+      type: string
+      description: Helm Version
+      default: "3.4.2"
     - name: binaries_dir
       type: string
       description: Directory to store downloaded binaries
@@ -31,19 +35,20 @@ spec:
       image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
       workingDir: /workspace/source
       args:
-      - |-
-        export PATH=${PATH}:$(params.binaries_dir)
+        - |-
+          export PATH=${PATH}:$(params.binaries_dir)
 
-        echo -e "\nDownloading kubeval"
+          echo -e "\nDownloading kubeval"
 
-        mkdir $(params.binaries_dir)
+          mkdir $(params.binaries_dir)
 
-        curl -SsL https://github.com/instrumenta/kubeval/releases/download/$(params.kubeval_version)/kubeval-linux-amd64.tar.gz | tar xz -C $(params.binaries_dir)
-        
-        echo -e "\nValidating Manifests"
+          curl -SsL https://github.com/instrumenta/kubeval/releases/download/$(params.kubeval_version)/kubeval-linux-amd64.tar.gz | tar xz -C $(params.binaries_dir)
+          curl -SsL https://get.helm.sh/helm-v$(params.helm_version)-linux-amd64.tar.gz | tar xz -C $(params.binaries_dir)
 
-        $(workspaces.source.path)/scripts/validate_resources.sh -d=$(workspaces.source.path)/examples -sl=$(workspaces.source.path)/schemas/openshift-json-schema -e
-        
+          echo -e "\nValidating Manifests"
+
+          $(workspaces.source.path)/scripts/validate_resources.sh -d=$(workspaces.source.path)/examples -sl=$(workspaces.source.path)/schemas/openshift-json-schema -e
+
       command:
-      - /bin/bash
-      - -c
+        - /bin/bash
+        - -c

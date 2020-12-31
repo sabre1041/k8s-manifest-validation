@@ -7,4 +7,5 @@ resources:
   - argocd-gpg-keys-cm.yml
   - argocd.yml
   - example-app-application.yml
+  - example-app-application-helm.yml
   - argocd-clusterrolebinding.yml
