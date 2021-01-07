@@ -1,0 +1,2 @@
+pyyaml
+openapi2jsonschema
